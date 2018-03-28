@@ -35,7 +35,7 @@ form = """
                 <p class='error'>
                 </p>
             </div>
-            <textarea name='text' type='text'>{0}</textarea>
+            <textarea name='text' type='text'>{text}</textarea>
             <input type='submit' value='Encrypt'>
     </body>
 </html>
@@ -43,16 +43,12 @@ form = """
 
 @app.route("/")
 def index():
-    text_default = "The cat was playing the saxophone in the garden."
-    #return header + form + text_default + footer
-    return form.format(text_default)
+    return form.format(text="The cat was playing the saxophone in the garden at night.")
 
 @app.route("/", methods=['POST'])
 def encrypt():
     rot = int(request.form['rot'])
     text = request.form['text']
-    text_encrypted = caesar_encrypt(text,rot)
-    #return header + form + text_encrypted + footer
-    return form.format(text_encrypted)
+    return form.format(text=caesar_encrypt(text,rot))
 
 app.run()   
